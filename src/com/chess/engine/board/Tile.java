@@ -13,7 +13,7 @@ public abstract class Tile {
 
     protected final int tileCoordinate;
 
-    private static final Map<Integer, EmptyTile> EMPTY_TILES = createAllPossibleEmptyTiles();
+    private static final Map<Integer, EmptyTile> EMPTY_TILES_CACHE = createAllPossibleEmptyTiles();
 
     private static Map<Integer, EmptyTile> createAllPossibleEmptyTiles() {
 
@@ -23,12 +23,13 @@ public abstract class Tile {
             emptyTileMap.put(i, new EmptyTile(i));
         }
 
+        //or the built-it JDK Collection.unmodifiableMap(emptyTileMap);
         return ImmutableMap.copyOf(emptyTileMap);
     }
 
     public static Tile createTile(final int tileCoordinate, final Piece piece){
 
-        return piece != null? new OccupiedTile(tileCoordinate, piece): EMPTY_TILES.get(tileCoordinate);
+        return piece != null? new OccupiedTile(tileCoordinate, piece): EMPTY_TILES_CACHE.get(tileCoordinate);
     }
 
     private Tile(int tileCoordinate){
@@ -40,7 +41,7 @@ public abstract class Tile {
 
     public static final class EmptyTile extends Tile{
 
-        EmptyTile(final int coordinate){
+        private EmptyTile(final int coordinate){
             super(coordinate);
         }
 
@@ -59,7 +60,7 @@ public abstract class Tile {
 
         private final Piece pieceOnTile;
 
-        OccupiedTile(int coordinate, Piece pieceOnTile){
+        private OccupiedTile(int coordinate, Piece pieceOnTile){
             super(coordinate);
             this.pieceOnTile = pieceOnTile;
         }
