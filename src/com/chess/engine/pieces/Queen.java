@@ -18,7 +18,7 @@ public class Queen extends Piece {
 
     private final static int [] CANDIDATE_MOVE_VECTOR_COORDINATES = {-9, -8, -7, -1, 1, 7, 8, 9};
 
-    Queen(int position, Alliance alliance) {
+    Queen(final int position, final Alliance alliance) {
         super(position, alliance);
     }
 
@@ -27,31 +27,31 @@ public class Queen extends Piece {
 
         List<Move> legalMoves = new ArrayList<>();
 
-        for(final int candidateCoordinateOffset : CANDIDATE_MOVE_VECTOR_COORDINATES){
+        for(int currentCandidateOffset : CANDIDATE_MOVE_VECTOR_COORDINATES){
             int candidateDestinationCoordinate = this.piecePosition;
-            while (BoardUtils.isValidTileCoordinate(candidateDestinationCoordinate)){
-                if(isFirstColumnExclusion(this.piecePosition, candidateCoordinateOffset) ||
-                        isEighthColumnExclusion(this.piecePosition, candidateCoordinateOffset)){
+            while(BoardUtils.isValidTileCoordinate(candidateDestinationCoordinate)){
+                if(isFirstColumnExclusion(this.piecePosition, currentCandidateOffset) ||
+                        isEighthColumnExclusion(this.piecePosition, currentCandidateOffset)){
                     break;
                 }
-
-                candidateDestinationCoordinate += candidateCoordinateOffset;
-                if(BoardUtils.isValidTileCoordinate(candidateDestinationCoordinate)) {
+                candidateDestinationCoordinate += currentCandidateOffset;
+                if(BoardUtils.isValidTileCoordinate(candidateDestinationCoordinate)){
                     final Tile candidateDestinationTile = board.getTile(candidateDestinationCoordinate);
                     if(!candidateDestinationTile.isTileOccupied()){
-                        legalMoves.add(new Move.MajorMove(board,this,candidateDestinationCoordinate));
+                        legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
                     }else{
                         final Piece pieceAtDestination = candidateDestinationTile.getPiece();
                         final Alliance pieceAlliance = pieceAtDestination.pieceAlliance;
-                        if(pieceAlliance != this.pieceAlliance){
-                            legalMoves.add(new Move.AttackMove(board, this,candidateDestinationCoordinate,pieceAtDestination));
+                        if(this.pieceAlliance != pieceAlliance){
+                            legalMoves.add(new Move.AttackMove(board,this,candidateDestinationCoordinate, pieceAtDestination));
                         }
-                        break;
                     }
-                }
-            }
-        }
 
+                }
+
+            }
+
+        }
         return ImmutableList.copyOf(legalMoves);
     }
 
