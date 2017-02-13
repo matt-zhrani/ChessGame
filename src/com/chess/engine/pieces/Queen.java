@@ -41,8 +41,8 @@ public class Queen extends Piece {
                         legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
                     }else{
                         final Piece pieceAtDestination = candidateDestinationTile.getPiece();
-                        final Alliance pieceAlliance = pieceAtDestination.pieceAlliance;
-                        if(this.pieceAlliance != pieceAlliance){
+                        final Alliance pieceAlliance = pieceAtDestination.getPieceAlliance();
+                        if(this.getPieceAlliance() != pieceAlliance){
                             legalMoves.add(new Move.AttackMove(board,this,candidateDestinationCoordinate, pieceAtDestination));
                         }
                     }
