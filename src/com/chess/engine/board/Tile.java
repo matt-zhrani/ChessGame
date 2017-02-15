@@ -12,8 +12,14 @@ import java.util.Map;
 public abstract class Tile {
 
     protected final int tileCoordinate;
-
     private static final Map<Integer, EmptyTile> EMPTY_TILES_CACHE = createAllPossibleEmptyTiles();
+
+    private Tile(final int tileCoordinate){
+        this.tileCoordinate = tileCoordinate;
+    }
+
+    public abstract boolean isTileOccupied();
+    public abstract Piece getPiece();
 
     private static Map<Integer, EmptyTile> createAllPossibleEmptyTiles() {
 
@@ -31,13 +37,6 @@ public abstract class Tile {
 
         return piece != null? new OccupiedTile(tileCoordinate, piece): EMPTY_TILES_CACHE.get(tileCoordinate);
     }
-
-    private Tile(final int tileCoordinate){
-        this.tileCoordinate = tileCoordinate;
-    }
-
-    public abstract boolean isTileOccupied();
-    public abstract Piece getPiece();
 
     public static final class EmptyTile extends Tile{
 
