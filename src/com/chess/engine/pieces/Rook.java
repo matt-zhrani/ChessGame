@@ -17,7 +17,7 @@ import java.util.List;
 public class Rook extends Piece {
 
     private final static int [] CANDIDATE_MOVE_COORDINATES = {-8, -1, 1,8};
-    Rook(int position, Alliance alliance) {
+    public Rook(final int position, final Alliance alliance) {
         super(position, alliance);
     }
 
@@ -51,6 +51,11 @@ public class Rook extends Piece {
             }
         }
         return ImmutableList.copyOf(legalMoves);
+    }
+
+    @Override
+    public String toString(){
+        return PieceType.ROOK.toString();
     }
 
     private boolean isFirstColumnExclusion(final int piecePosition, final int currentCandidateOffset) {
