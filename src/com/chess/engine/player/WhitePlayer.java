@@ -11,7 +11,7 @@ import java.util.Collection;
  * Created by ahmed on 2/17/2017.
  */
 public class WhitePlayer extends Player {
-    public WhitePlayer(Board board, Collection<Move> whiteStandardLegalMove, Collection<Move> blackStandardLegalMove) {
+    public WhitePlayer(final Board board, final Collection<Move> whiteStandardLegalMove, final Collection<Move> blackStandardLegalMove) {
         super(board, whiteStandardLegalMove, blackStandardLegalMove);
     }
 
@@ -27,6 +27,6 @@ public class WhitePlayer extends Player {
 
     @Override
     public Player getOpponent() {
-        return this.board.whitePlayer();
+        return this.board.blackPlayer();
     }
 }
